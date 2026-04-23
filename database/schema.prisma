@@ -1,0 +1,32 @@
+// Prisma Schema for Simple Web Calculator
+// Most logic is client-side; schema supports optional history + config
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// Stores optional server-side log of calculations performed
+model CalculationHistory {
+  id         String   @id @default(cuid())
+  expression String   // e.g. "12 + 7"
+  result     String   // e.g. "19"
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("calculation_history")
+}
+
+/// Key-value store for app-level configuration
+model AppConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique // e.g. "max_history_records"
+  value     String           // e.g. "100"
+  updatedAt DateTime @updatedAt
+
+  @@map("app_config")
+}
