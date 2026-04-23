@@ -264,7 +264,7 @@ export default function Page() {
     },
   }
 
-  const ButtonComp = ({ label, type = 'number', onClick, icon, wide = false }) => {
+  const ButtonComp = ({ label, type = 'number', onClick, icon = null, wide = false }) => {
     const [hovered, setHovered] = useState(false)
     const style = {
       ...(wide ? btnStyles.zero : btnStyles[type]),
